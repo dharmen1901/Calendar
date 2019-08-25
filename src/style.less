@@ -1,0 +1,147 @@
+.main-calendar{
+    font-size: 14px;
+    font-family: Arial,sans-serif;
+
+    .menu{
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        display: inline-flex;
+
+        .calendar-without-sidebar{
+            padding: 5px;
+        }
+        .calendar{
+            table{
+                border-spacing: 0px;
+                border-collapse: collapse;
+                text-align: center;    
+                td{
+                    padding: 0px;
+                }        
+            }
+        
+            .header{
+                height: 40px;
+                line-height: 40px;
+                border-bottom: 1px solid #e8e8e8;
+                font-weight: bold;
+                table{
+                    width: 100%;
+                    .prev,.next{
+                        padding: 0px 8px;
+                    }
+                    border: none;
+                }
+            }
+        
+            .body{
+                table{
+                    td,th{
+                        width: 30px;
+                        height: 30px;
+                    }
+                    tbody td:hover{
+                        background: #C0C0C0
+                    }
+                }
+            }
+        
+            .calendar-table{
+                .month-row{
+                    .current-month{
+                            width: 100%;
+                    }
+                }
+                tr.week-header-row {
+                    font-weight: bold;
+                }
+            }
+        
+            .selected{
+                background: #a9a9a9;
+            }
+            
+            .out-scope{
+                color: #d3d3d3 !important;
+            }
+
+            .disabled{
+                color: #a9a9a9;
+                &:hover{
+                    background: none !important;
+                }
+            }
+        
+            .range-start,.range-end{
+                background: #808080
+            }
+        
+            .month-table{
+                border: 1px solid #e8e8e8;
+                .month-header{
+                    .year-header-row{
+                        .current-year{
+                            width: 100%;
+                        }
+                    }
+                }
+                .body{
+                    td,th{
+                        width: 70px;
+                        height: 52.5px;
+                    }
+                }
+            }
+        
+            .century-table{
+                border: 1px solid #e8e8e8;
+                .century-header{
+                    .century-header-row{
+                        .current-century{
+                            width: 100%;
+                        }
+                    }
+                }
+                .body{
+                    td,th{
+                        width: 70px;
+                        height: 52.5px;
+                    }
+                }
+            }
+        }
+        
+        .side-menu{
+            width: 70px;
+            height: 294px;
+            vertical-align: top;
+            border-right: 1px solid #e8e8e8;
+            .side-menu-table{
+                height: 100%;
+                overflow: hidden;
+                .side-menu-item{
+                    border-bottom: 1px solid #e8e8e8;
+                    padding: 5px;
+                    &:hover{
+                        background: #C0C0C0
+                    }
+                }
+            }
+        }
+
+        .show-date{
+            align-items: center;
+            height: 32px;
+            justify-content: center;
+            display: flex;
+            font-size: 16px;
+            border-bottom: 1px solid #e8e8e8;
+        }
+    }
+
+}
+
+.calendar-range{
+    .menu .side-menu{
+        height: 327px;
+    }
+}
