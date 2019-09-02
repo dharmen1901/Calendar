@@ -6,15 +6,25 @@ class DateShow extends Component {
         super(props);
     }
 
+    handleChange = (e)=>{
+        this.props.onChangeInput(e.target.value)
+    }
+
     render() {
-        let {showDate,prefix} = this.props;
-        const date = showDate.getDate()>9 ? showDate.getDate() : "0" + showDate.getDate();
-        let month = showDate.getMonth()+1;
-        month = month>9 ? month : '0' + month;
+        const {prefix,inputDate,disabled} = this.props;
         return (
             <div>
                 <div className="show-date">
-                    {prefix}{date}.{month}.{showDate.getFullYear()}
+                    {prefix}
+                    <span>
+                        <input 
+                            disabled = {disabled}
+                            type="text" 
+                            onChange={this.handleChange}
+                            placeholder="dd/mm/yyyy"
+                            value={inputDate}
+                        />
+                    </span>
                 </div>
             </div>
         );

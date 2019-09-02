@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class Calendar extends Component {
     constructor(props) {
         super(props);
-        this.state = { showType: 0, viewableCentury:this.props.viewableYear }
+        this.state = { showType: 0 }
     }
 
     gotoPreviousMonth = () => {
@@ -25,7 +25,6 @@ class Calendar extends Component {
 
     gotoYear = (year) => {
         this.props.changeDate(this.props.viewableMonth, year);
-        this.setState({viewableCentury:year})
     }
 
     getNoDays = () => 32 - new Date(this.props.viewableYear, this.props.viewableMonth, 32).getDate();
@@ -37,7 +36,7 @@ class Calendar extends Component {
         const calArray = this.getCalendarArray();
         return (
             calArray.map( (tr,index) =>
-                <tr className="days-row">
+                <tr className="days-row" key={index}>
                     {tr.map(td => {
                         if(index>3 && td<=16)
                             return renderDate(td,"next-month")
@@ -98,69 +97,72 @@ class Calendar extends Component {
             <table className="month-table">
                 <thead className="month-header header">
                     <tr className="year-header-row">
+                        <td>
                         <table><tbody><tr>
                             <td className="prev" onClick={() => this.gotoYear(this.props.viewableYear - 1)}>{"<"}</td>
                             <td className="current-year" onClick={() => this.setState({ showType: 2 })}>{this.props.viewableYear}</td>
                             <td className="next" onClick={() => this.gotoYear(this.props.viewableYear + 1)}>{">"}</td>
                         </tr></tbody></table>
+                        </td>
                     </tr>
                 </thead>
-                <tbody className="month-body body">
+                <tbody className="month-body body"><tr><td>
                     <table><tbody>
                         <tr className="month-row">
-                            {monArray.slice(0, 3).map(row => <td className={row.value==viewableMonth?"selected":""} onClick={() => this.gotoMonth(row.value)}>{row.label}</td>)}
+                            {monArray.slice(0, 3).map(row => <td key={row.value} className={row.value==viewableMonth?"selected":""} onClick={() => this.gotoMonth(row.value)}>{row.label}</td>)}
                         </tr>
                         <tr className="month-row">
-                            {monArray.slice(3, 6).map(row => <td className={row.value==viewableMonth?"selected":""} onClick={() => this.gotoMonth(row.value)}>{row.label}</td>)}
+                            {monArray.slice(3, 6).map(row => <td key={row.value} className={row.value==viewableMonth?"selected":""} onClick={() => this.gotoMonth(row.value)}>{row.label}</td>)}
                         </tr>
                         <tr className="month-row">
-                            {monArray.slice(6,9).map(row => <td className={row.value==viewableMonth?"selected":""} onClick={() => this.gotoMonth(row.value)}>{row.label}</td>)}
+                            {monArray.slice(6,9).map(row => <td key={row.value} className={row.value==viewableMonth?"selected":""} onClick={() => this.gotoMonth(row.value)}>{row.label}</td>)}
                         </tr>
                         <tr className="month-row">
-                            {monArray.slice(9).map(row => <td className={row.value==viewableMonth?"selected":""} onClick={() => this.gotoMonth(row.value)}>{row.label}</td>)}
+                            {monArray.slice(9).map(row => <td key={row.value} className={row.value==viewableMonth?"selected":""} onClick={() => this.gotoMonth(row.value)}>{row.label}</td>)}
                         </tr>
                     </tbody></table>
+                    </td></tr>
                 </tbody>
             </table>
         )
     }
 
     renderCentury(centuryStart) {
-        const {viewableYear} = this.props;
+        const {viewableYear, changeCentury} = this.props;
         const century = centuryStart - centuryStart%10;
         let centuryArray = [century-1, century, century + 1, century + 2, century + 3, century + 4, century + 5, century + 6, century + 7, century + 8, century + 9, century+10 ]
         return (
             <table className="century-table">
                 <thead className="century-header header">
-                    <tr className="century-header-row">
+                    <tr className="century-header-row"><td>
                     <table><tbody>
                         <tr>
-                            <td className="prev" onClick={() => this.setState({viewableCentury:century-10})}>{"<"}</td>
+                            <td className="prev" onClick={() => changeCentury(century-10)}>{"<"}</td>
                             <td className="current-century">{century} - {century+10}</td>
-                            <td className="next" onClick={() => this.setState({viewableCentury:century+10})}>{">"}</td>
+                            <td className="next" onClick={() => changeCentury(century+10)}>{">"}</td>
                         </tr>
                     </tbody></table>
-                    </tr>
+                    </td></tr>
                 </thead>
                 <tbody className="century-body body">
-                    <table>
+                    <tr><td><table>
                         <tbody>
                             <tr className="century-body-row">
                                 <td className={centuryArray[0]==viewableYear?"selected out-scope":'out-scope'} onClick={()=>{this.gotoYear(centuryArray[11]);this.setState({showType:1})}}>{centuryArray[11]}</td>
-                                {centuryArray.slice(1, 3).map(row => <td className={row==viewableYear?"selected":''} onClick={()=>{this.gotoYear(row);this.setState({showType:1})}}>{row}</td>)}
+                                {centuryArray.slice(1, 3).map(row => <td key={row} className={row==viewableYear?"selected":''} onClick={()=>{this.gotoYear(row);this.setState({showType:1})}}>{row}</td>)}
                             </tr>
                             <tr className="century-body-row">
-                                {centuryArray.slice(3, 6).map(row => <td className={row==viewableYear?"selected":''} onClick={()=>{this.gotoYear(row);this.setState({showType:1})}}>{row}</td>)}
+                                {centuryArray.slice(3, 6).map(row => <td key={row} className={row==viewableYear?"selected":''} onClick={()=>{this.gotoYear(row);this.setState({showType:1})}}>{row}</td>)}
                             </tr>
                             <tr className="century-body-row">
-                                {centuryArray.slice(6, 9).map(row => <td className={row==viewableYear?"selected":''} onClick={()=>{this.gotoYear(row);this.setState({showType:1})}}>{row}</td>)}
+                                {centuryArray.slice(6, 9).map(row => <td key={row} className={row==viewableYear?"selected":''} onClick={()=>{this.gotoYear(row);this.setState({showType:1})}}>{row}</td>)}
                             </tr>
                             <tr className="century-body-row">
-                                {centuryArray.slice(9,11).map(row => <td className={row==viewableYear?"selected":''} onClick={()=>{this.gotoYear(row);this.setState({showType:1})}}>{row}</td>)}
+                                {centuryArray.slice(9,11).map(row => <td key={row} className={row==viewableYear?"selected":''} onClick={()=>{this.gotoYear(row);this.setState({showType:1})}}>{row}</td>)}
                                 <td className={centuryArray[11]==viewableYear?"selected out-scope":'out-scope'} onClick={()=>{this.gotoYear(centuryArray[11]);this.setState({showType:1})}}>{centuryArray[11]}</td>
                             </tr>
                         </tbody>
-                    </table>
+                    </table></td></tr>
                 </tbody>
             </table>
         )
@@ -191,7 +193,7 @@ class Calendar extends Component {
                         <table className="main-table">
                             <thead className="week-header">
                                 <tr className="week-header-row">
-                                    {dayArray.map(data=><td>{data}</td>)}
+                                    {dayArray.map((data,index)=><td key={index}>{data}</td>)}
                                 </tr>
                             </thead>
                             <tbody className="days-body">
@@ -209,7 +211,7 @@ class Calendar extends Component {
             <div className="calendar">
                 {this.state.showType == 0 && this.renderCalendar()}
                 {this.state.showType == 1 && this.renderMonths()}
-                {this.state.showType == 2 && this.renderCentury(this.state.viewableCentury)}
+                {this.state.showType == 2 && this.renderCentury(this.props.viewableCentury)}
             </div>
         );
     }
